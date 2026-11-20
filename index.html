@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- The text shown in the browser tab (was "Document") -->
+  <title>Rock Paper Scissors | DevinLeeTech</title>
+
+  <!-- Page styling lives in styles.css -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Game logic lives in script.js.
+       "defer" makes the browser wait until the HTML is fully loaded before
+       running the script, so every button and score already exists
+       by the time the script looks for them. -->
+  <script src="script.js" defer></script>
+<!-- SEO:START (written by tools/update-seo.py - do not edit by hand; change the PAGES table in that script instead) -->
+<meta name="description" content="Play Rock Paper Scissors against the computer in your browser, with a running score and a history of every round.">
+<link rel="canonical" href="https://devinleetech.com/games/rock-paper-scissors/">
+<meta property="og:site_name" content="DevinLeeTech">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rock Paper Scissors | DevinLeeTech">
+<meta property="og:description" content="Play Rock Paper Scissors against the computer in your browser, with a running score and a history of every round.">
+<meta property="og:url" content="https://devinleetech.com/games/rock-paper-scissors/">
+<meta property="og:image" content="https://devinleetech.com/images/social/games-rock-paper-scissors.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rock Paper Scissors">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rock Paper Scissors | DevinLeeTech">
+<meta name="twitter:description" content="Play Rock Paper Scissors against the computer in your browser, with a running score and a history of every round.">
+<meta name="twitter:image" content="https://devinleetech.com/images/social/games-rock-paper-scissors.jpg">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#070b14">
+<!-- SEO:END -->
+</head>
+<body>
+
+  <!-- The whole game sits inside one centered card -->
+  <main class="game">
+
+    <!-- HEADING -->
+    <h1>Rock Paper Scissors</h1>
+    <p class="instructions">Pick a move and see if you can beat the computer.</p>
+
+    <!-- THE PLAYER'S CHOICES
+         Each button has a data-selection value ("rock", "paper" or "scissors").
+         script.js reads that value to know which one was clicked. The names must
+         match the "name" values in the SELECTIONS list in script.js.
+         The emoji is hidden from screen readers (aria-hidden) because the visible
+         text label right below it already says what the button is. -->
+    <div class="selections" role="group" aria-label="Choose your move">
+      <button class="selection" type="button" data-selection="rock">
+        <span class="selection-emoji" aria-hidden="true">✊🏽</span>
+        <span class="selection-label">Rock</span>
+      </button>
+      <button class="selection" type="button" data-selection="paper">
+        <span class="selection-emoji" aria-hidden="true">✋🏽</span>
+        <span class="selection-label">Paper</span>
+      </button>
+      <button class="selection" type="button" data-selection="scissors">
+        <span class="selection-emoji" aria-hidden="true">✌🏽</span>
+        <span class="selection-label">Scissors</span>
+      </button>
+    </div>
+
+    <!-- ROUND MESSAGE
+         After every round, script.js writes the outcome here ("You win!",
+         "It's a tie!", etc.). role="status" tells screen readers to announce
+         the change automatically. The starting text here must match
+         INTRO_MESSAGE in script.js (it's used again when the game is reset). -->
+    <p class="message" role="status" data-message>Pick a move to start.</p>
+
+    <!-- SCOREBOARD
+         script.js finds the two numbers with the data-your-score and
+         data-computer-score attributes and updates them after each round. -->
+    <div class="scoreboard">
+      <div class="score-card">
+        <span class="score-label">You</span>
+        <span class="score-value" data-your-score>0</span>
+      </div>
+      <div class="score-card">
+        <span class="score-label">Computer</span>
+        <span class="score-value" data-computer-score>0</span>
+      </div>
+    </div>
+
+    <!-- ROUND HISTORY
+         Hidden until the first round is played (the "hidden" attribute).
+         script.js adds one row per round into the data-history list, newest on top.
+         Each row shows your pick on the left and the computer's on the right. -->
+    <section class="history" data-history-section hidden>
+      <h2 class="history-heading">Previous rounds</h2>
+
+      <!-- Column labels. aria-hidden because each round row describes itself
+           to screen readers (see addRoundResult in script.js). -->
+      <div class="history-columns" aria-hidden="true">
+        <span>You</span>
+        <span>Computer</span>
+      </div>
+
+      <!-- Round rows are inserted here by script.js -->
+      <div data-history></div>
+    </section>
+
+    <!-- BOTTOM BUTTONS -->
+    <div class="actions">
+
+      <!-- Clears the scores, history and message so a new game can start -->
+      <button class="button button-secondary" type="button" data-reset>Reset game</button>
+
+      <!-- Takes the player back to the site's Games page. "../../" means "go up two
+           folders" (out of rock-paper-scissors/ and games/), so it works on any host. -->
+      <a class="button button-primary" href="../../games.html">Return to Games</a>
+    </div>
+
+  </main>
+</body>
+</html>

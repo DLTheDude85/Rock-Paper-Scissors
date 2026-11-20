@@ -1,0 +1,371 @@
+/* ==========================================================================
+   ROCK PAPER SCISSORS - STYLES
+   Sections: colors/fonts -> page layout -> heading -> move buttons ->
+             message -> scoreboard -> round history -> bottom buttons ->
+             accessibility -> small screens
+   ========================================================================== */
+
+
+/* ---------- Colors and fonts ----------
+   All colors are defined once here. To re-theme the game (for example to match
+   your site), change these values and everything below updates with them. */
+:root {
+  --page-bg: #1E3A5F;      /* deep navy page background and main button color */
+  --card-bg: #FFFFFF;      /* the white game card */
+  --surface: #F2F5F9;      /* light grey-blue for buttons and boxes */
+  --ink: #1B2733;          /* main text */
+  --muted: #5A6878;        /* secondary text */
+  --line: #D3DBE6;         /* borders */
+  --focus: #2F6FDE;        /* keyboard focus ring */
+
+  --win: #1F8A5B;          /* green: winning pick border */
+  --win-bg: #E3F4EB;
+  --win-ink: #14603F;
+
+  --lose: #C2414F;         /* red: used for the "computer wins" message */
+  --lose-bg: #FBE6E9;
+  --lose-ink: #8F2634;
+
+  --tie: #8794A6;          /* grey: ties */
+  --tie-bg: #E8ECF1;
+  --tie-ink: #3F4D5E;
+
+  /* System fonts: fast, no downloads. Swap in your site's font here if you want a match. */
+  --font: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Make padding and borders count inside an element's width, which keeps sizing predictable */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* The "hidden" attribute (used on the history section) should always win over other display rules */
+[hidden] {
+  display: none !important;
+}
+
+
+/* ---------- Page layout ---------- */
+
+/* Navy background, with the game card centered on the page */
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--page-bg);
+  color: var(--ink);
+  font-family: var(--font);
+}
+
+/* The white card that holds everything */
+.game {
+  width: 100%;
+  max-width: 32rem;
+  padding: 2.25rem 2rem;
+  background-color: var(--card-bg);
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ---------- Heading ---------- */
+
+h1 {
+  margin: 0 0 0.35rem;
+  text-align: center;
+  font-size: clamp(1.75rem, 6vw, 2.25rem);
+  line-height: 1.15;
+  color: var(--page-bg);
+}
+
+.instructions {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+
+/* ---------- The three move buttons ---------- */
+
+/* Row holding the three buttons, centered on the card */
+.selections {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* Each button: a rounded tile with the emoji on top and its name underneath.
+   The three share the row equally (flex: 1) up to a maximum width. */
+.selection {
+  flex: 1 1 0;
+  max-width: 8.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1rem 0.5rem;
+  font-family: inherit;
+  background-color: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: transform 120ms, border-color 120ms, background-color 120ms;
+}
+
+.selection-emoji {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.selection-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* Hover: the tile lifts slightly and gets a navy border so it clearly looks clickable */
+.selection:hover {
+  transform: translateY(-3px);
+  border-color: var(--page-bg);
+  background-color: var(--card-bg);
+}
+
+/* Pressed: the tile presses back down */
+.selection:active {
+  transform: translateY(0) scale(0.97);
+}
+
+
+/* ---------- Round message ---------- */
+
+/* Default (before any round): plain grey. min-height stops the card
+   from jumping when a message wraps onto two lines. */
+.message {
+  margin: 1.25rem 0 0;
+  min-height: 3.25rem;
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  color: var(--muted);
+  background-color: var(--surface);
+  border-radius: 0.75rem;
+}
+
+/* script.js adds one of these classes after every round */
+.message.win  { color: var(--win-ink);  background-color: var(--win-bg); }
+.message.lose { color: var(--lose-ink); background-color: var(--lose-bg); }
+.message.tie  { color: var(--tie-ink);  background-color: var(--tie-bg); }
+
+
+/* ---------- Scoreboard ---------- */
+
+/* Two equal boxes side by side: You | Computer */
+.scoreboard {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.score-card {
+  padding: 1rem;
+  text-align: center;
+  border: 2px solid var(--line);
+  border-radius: 1rem;
+}
+
+.score-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* The score number is big so it's easy to read at a glance.
+   tabular-nums keeps digits the same width so the number doesn't wiggle as it changes. */
+.score-value {
+  display: block;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+
+/* ---------- Round history ---------- */
+
+/* Sits below the scoreboard, separated by a thin line */
+.history {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.history-heading {
+  margin: 0 0 0.75rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* "You" and "Computer" labels above the columns of picks */
+.history-columns {
+  margin-bottom: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* One round = one row with two equal columns (your pick, computer's pick) */
+.round {
+  margin-bottom: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* The box around each emoji pick */
+.result-selection {
+  padding: 0.4rem;
+  text-align: center;
+  font-size: 2rem;
+  border: 2px solid transparent;
+  border-radius: 0.75rem;
+}
+
+/* Winner: green border and tint so it stands out */
+.result-selection.winner {
+  background-color: var(--win-bg);
+  border-color: var(--win);
+}
+
+/* Loser: faded back */
+.result-selection.loser {
+  background-color: var(--surface);
+  opacity: 0.5;
+}
+
+/* Tie: neutral grey with a dashed border (the dashes mean "no winner", not just a color) */
+.result-selection.tie {
+  background-color: var(--tie-bg);
+  border: 2px dashed var(--tie);
+}
+
+
+/* ---------- Bottom buttons: Reset game / Return to Games ---------- */
+
+.actions {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* Shared look for both bottom buttons (the Return link is an <a> styled to match).
+   min-height of 44px keeps them easy to tap on a phone. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.6rem 1.4rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--page-bg);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 120ms, color 120ms;
+}
+
+/* Main button: solid navy */
+.button-primary {
+  color: #FFFFFF;
+  background-color: var(--page-bg);
+}
+.button-primary:hover {
+  background-color: #14294A;
+}
+
+/* Secondary button: navy outline, fills in lightly on hover */
+.button-secondary {
+  color: var(--page-bg);
+  background-color: transparent;
+}
+.button-secondary:hover {
+  background-color: var(--surface);
+}
+
+
+/* ---------- Accessibility ---------- */
+
+/* Visible focus ring for keyboard users (shows when tabbing, not when clicking).
+   The original code removed the outline entirely, which left keyboard users with no indicator. */
+.selection:focus-visible,
+.button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* If someone has "reduce motion" turned on in their device settings, skip the animations */
+@media (prefers-reduced-motion: reduce) {
+  .selection,
+  .button {
+    transition: none;
+  }
+  .selection:hover,
+  .selection:active {
+    transform: none;
+  }
+}
+
+
+/* ---------- Tablets ---------- */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+  .game {
+    padding: 1.75rem 1.25rem;
+  }
+}
+
+/* ---------- Phones ---------- */
+@media screen and (max-width: 480px) {
+  /* Slightly smaller move tiles so all three fit comfortably across a narrow screen */
+  .selections {
+    gap: 0.5rem;
+  }
+  .selection {
+    padding: 0.75rem 0.25rem;
+  }
+  .selection-emoji {
+    font-size: 2.25rem;
+  }
+  .score-value {
+    font-size: 2.5rem;
+  }
+
+  /* Stack the bottom buttons full width so they're easy to tap */
+  .actions {
+    flex-direction: column;
+  }
+  .button {
+    width: 100%;
+  }
+}
